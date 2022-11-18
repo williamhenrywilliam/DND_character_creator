@@ -1,8 +1,11 @@
 package com.whycoding.services;
 
 import com.whycoding.model.DNDClass;
+import com.whycoding.model.DNDClassList;
 import com.whycoding.services.DNDClassService;
 
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class ConsoleService {
@@ -14,8 +17,6 @@ public class ConsoleService {
         System.out.println("---------Main Menu---------");
         System.out.println("1: Begin Character Creation");
         System.out.println("2: Learn More About the Process");
-        System.out.println("3: See the available Classes");
-        System.out.println("4: Get Class by index");
         System.out.println("0: Exit");
         System.out.println();
     }
@@ -40,6 +41,13 @@ public class ConsoleService {
                 case 4:
                     //TODO
                     break;
+                case 5:
+                    //TODO
+                    break;
+                case 6:
+                    printClasses(dndClassService.getListOfClasses());
+                    break;
+
                 default:
                     System.out.println("Invalid selection");;
             }
@@ -53,7 +61,9 @@ public class ConsoleService {
         System.out.println("2: Chose Race");
         System.out.println("3: Choose Background");
         System.out.println("4: Create Backstory");
-        System.out.println("4: Roll for Ability Scores");
+        System.out.println("5: Roll for Ability Scores");
+        System.out.println("6: See Classes");
+
         System.out.println("0: Exit");
         System.out.println();
     }
@@ -127,8 +137,6 @@ public class ConsoleService {
         System.out.println();
     }
 
-
-
     public int promptForMenuSelection() {
         int menuSelection;
         System.out.print("Please choose an option: ");
@@ -159,13 +167,15 @@ public class ConsoleService {
         System.out.println(dndClass.toString());
     }
 
-    public void printClasses(DNDClass[] dndClasses){
+    public void printClasses(DNDClassList dndClassList){
         System.out.println("---------------");
         System.out.println("DND Classes");
         System.out.println("---------------");
-        for (DNDClass dndClass : dndClasses){
-            System.out.println(dndClass.toString());
 
+        Map<String, String>[] listOfClasses = dndClassList.getResults();
+
+        for(int i = 0; i < listOfClasses.length; i++){
+            System.out.println(listOfClasses[i].get("name"));
         }
     }
 

@@ -34,12 +34,6 @@ public class App {
                 case 2:
                     consoleService.printLearnMoreInfo();
                     break;
-                case 3:
-                    consoleService.printClasses(dndClassService.listClasses());
-                    break;
-                case 4:
-                    consoleService.printClass(dndClassService.getClassByIndex("druid"));
-                    break;
                 default:
                     System.out.println("Invalid selection");;
             }
