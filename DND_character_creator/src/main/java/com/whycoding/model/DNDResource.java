@@ -2,7 +2,7 @@ package com.whycoding.model;
 
 import java.util.Map;
 
-public class DNDClassList {
+public class DNDResource {
     private int count;
     private Map<String, String>[] results;
 

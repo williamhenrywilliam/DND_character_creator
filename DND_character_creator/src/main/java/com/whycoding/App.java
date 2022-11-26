@@ -3,11 +3,20 @@ package com.whycoding;
 import com.whycoding.model.DNDClass;
 import com.whycoding.services.ConsoleService;
 import com.whycoding.services.DNDClassService;
+import com.whycoding.model.PlayerCharacter;
+
+
+/*
+Overall Todos:
+add the printResource and classes and stuff to the DNDClassService?
+i need some way to print all of the things from a resouce while also assigning them a number that I can click on to count as user seelction
+ */
 
 public class App {
 
     private final ConsoleService consoleService = new ConsoleService();
     private final DNDClassService dndClassService = new DNDClassService();
+
 
     public static void main(String[] args) {
         App app = new App();
@@ -20,8 +29,8 @@ public class App {
         System.out.println("***********************************************");
         System.out.println();
 
-        int menuSelection = -1;
 
+        int menuSelection = -1;
         while(menuSelection != 0){
             consoleService.printMainMenu();
             menuSelection = consoleService.promptForMenuSelection();

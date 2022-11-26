@@ -1,17 +1,23 @@
 package com.whycoding.services;
 
 import com.whycoding.model.DNDClass;
-import com.whycoding.model.DNDClassList;
-import com.whycoding.services.DNDClassService;
+import com.whycoding.model.DNDResource;
+import com.whycoding.model.PlayerCharacter;
 
 import java.util.Map;
-import java.util.HashMap;
 import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.io.FileWriter;
 
 public class ConsoleService {
 
     private final DNDClassService dndClassService = new DNDClassService();
     private final Scanner scanner = new Scanner(System.in);
+    private final String DIRECTORY_NAME = "C:\\Users\\William\\Coding_Projects\\DND_character_creator";
+
+    PlayerCharacter userCharacter = new PlayerCharacter();
 
     public void printMainMenu(){
         System.out.println("---------Main Menu---------");
@@ -23,6 +29,8 @@ public class ConsoleService {
 
     public void handleCharacterCreationMenu(){
         int menuSelection = -1;
+
+
         while(menuSelection != 0){
             printCharacterCreationMenu();
             menuSelection = promptForMenuSelection();
@@ -37,15 +45,34 @@ public class ConsoleService {
                     break;
                 case 3:
                     //TODO
+
                     break;
                 case 4:
                     //TODO
+                    System.out.println("-------------------------");
+                    System.out.println("Name Selection");
+                    System.out.println("-------------------------");
+                    System.out.println("Please enter your character's name:");
+                    String characterName = scanner.nextLine();
+                    System.out.println(characterName + "? Great choice!");
+
+                    userCharacter.setCharacterName(characterName);
+                    createCharacterSheet(userCharacter.getCharacterName());
                     break;
                 case 5:
                     //TODO
                     break;
                 case 6:
-                    printClasses(dndClassService.getListOfClasses());
+                    System.out.println("-------------------------");
+                    System.out.println("DND Classes");
+                    System.out.println("-------------------------");
+                    printResource(dndClassService.getClassesResource());
+                    break;
+                case 7:
+                    System.out.println("---------------");
+                    System.out.println("DND Races");
+                    System.out.println("---------------");
+                    printResource(dndClassService.getRacesResource());
                     break;
 
                 default:
@@ -60,9 +87,10 @@ public class ConsoleService {
         System.out.println("1: Choose Class");
         System.out.println("2: Chose Race");
         System.out.println("3: Choose Background");
-        System.out.println("4: Create Backstory");
+        System.out.println("4: Choose Name");
         System.out.println("5: Roll for Ability Scores");
         System.out.println("6: See Classes");
+        System.out.println("7: See Races");
 
         System.out.println("0: Exit");
         System.out.println();
@@ -161,22 +189,34 @@ public class ConsoleService {
         System.out.println("Where does this character come from and what is their motivation to take up adventuring?!");
         System.out.println("All of this and more will be answered by you. By the end of the process, you will have a fully fleshed out PC ready to take to the table");
         System.out.println("There is no time to waste. Return to the main menu and get to it, adventurer! And remember, it's dangerous to go alone...");
+        System.out.println();
     }
 
     public void printClass(DNDClass dndClass) {
         System.out.println(dndClass.toString());
     }
 
-    public void printClasses(DNDClassList dndClassList){
-        System.out.println("---------------");
-        System.out.println("DND Classes");
-        System.out.println("---------------");
+    public void printResource(DNDResource dndResource){
+        Map<String, String>[] resource = dndResource.getResults();
 
-        Map<String, String>[] listOfClasses = dndClassList.getResults();
-
-        for(int i = 0; i < listOfClasses.length; i++){
-            System.out.println(listOfClasses[i].get("name"));
+        for(int i = 0; i < resource.length; i++){
+            System.out.print(i + 1);
+            System.out.print(": ");
+            System.out.println(resource[i].get("name"));
         }
+    }
+
+    //TODO add file writer
+    public void createCharacterSheet(String fileName){
+        String filePath = "\\" + fileName +".txt";
+        File characterSheet = new File(DIRECTORY_NAME, filePath);
+
+        try{
+            characterSheet.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
