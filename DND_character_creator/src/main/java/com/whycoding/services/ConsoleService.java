@@ -98,69 +98,31 @@ public class ConsoleService {
 
     public void handleClassSelectionMenu(){
         int menuSelection = -1;
+        DNDResource classesResource = dndClassService.getClassesResource();
+
         while(menuSelection != 0){
             printClassSelectionMenu();
             menuSelection = promptForMenuSelection();
-            switch(menuSelection){
-                case 0:
-                    continue;
-                case 1:
-                    printClass(dndClassService.getClassByIndex("barbarian"));
-                    break;
-                case 2:
-                    printClass(dndClassService.getClassByIndex("bard"));
-                    break;
-                case 3:
-                    printClass(dndClassService.getClassByIndex("cleric"));
-                    break;
-                case 4:
-                    printClass(dndClassService.getClassByIndex("druid"));
-                    break;
-                case 5:
-                    printClass(dndClassService.getClassByIndex("fighter"));
-                    break;
-                case 6:
-                    printClass(dndClassService.getClassByIndex("monk"));
-                    break;
-                case 7:
-                    printClass(dndClassService.getClassByIndex("paladin"));
-                    break;
-                case 8:
-                    printClass(dndClassService.getClassByIndex("ranger"));
-                    break;
-                case 9:
-                    printClass(dndClassService.getClassByIndex("rogue"));
-                    break;
-                case 10:
-                    printClass(dndClassService.getClassByIndex("sorcerer"));
-                    break;
-                case 11:
-                    printClass(dndClassService.getClassByIndex("warlock"));
-                    break;
-                case 12:
-                    printClass(dndClassService.getClassByIndex("wizard"));
-                    break;
-                default:
-                    System.out.println("Invalid selection");;
+
+            if(menuSelection == 0) {
+                continue;
+            } else if (menuSelection > classesResource.getCount()){
+                System.out.println("Invalid selection, please choose again");
+            } else {
+                userCharacter.setDndClass(dndClassService.getClassByIndex(classesResource.getResults()[menuSelection-1].get("index")));
+                printClass(userCharacter.getDndClass());
+                //printClass(dndClassService.getClassByIndex(classesResource.getResults()[menuSelection-1].get("index")));
+                System.out.println(userCharacter.getDndClass().getName());
+                break;
             }
+
         }
     }
 
     public void printClassSelectionMenu(){
         System.out.println();
         System.out.println("---------Classes---------");
-        System.out.println("1: Barbarian");
-        System.out.println("2: Bard");
-        System.out.println("3: Cleric");
-        System.out.println("4: Druid");
-        System.out.println("5: Fighter");
-        System.out.println("6: Monk");
-        System.out.println("7: Paladin");
-        System.out.println("8: Ranger");
-        System.out.println("9: Rogue");
-        System.out.println("10: Sorcerer");
-        System.out.println("11: Warlock");
-        System.out.println("12: Wizard");
+        printResource(dndClassService.getClassesResource());
         System.out.println("0: Exit");
         System.out.println();
     }
@@ -182,6 +144,9 @@ public class ConsoleService {
     }
 
     public void printLearnMoreInfo(){
+        System.out.println("-------------------------");
+        System.out.println("DND Classes");
+        System.out.println("-------------------------");
         System.out.println("This program will guide you step by step in the character creation process for 5th edition character creation.");
         System.out.println("You will make exciting decisions about your character as you bring your idea to life.");
         System.out.println("What fantasy race will they belong to?");

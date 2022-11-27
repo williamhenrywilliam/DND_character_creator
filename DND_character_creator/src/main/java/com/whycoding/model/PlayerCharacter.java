@@ -11,7 +11,8 @@ public class PlayerCharacter {
     public void setCharacterName(String name){
         this.characterName = name;
     }
-
+    public DNDClass getDndClass() {return dndClass;}
+    public void setDndClass(DNDClass dndClass) {this.dndClass = dndClass;}
 
 
 
