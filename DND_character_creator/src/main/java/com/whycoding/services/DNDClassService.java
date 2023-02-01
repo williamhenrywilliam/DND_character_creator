@@ -1,6 +1,7 @@
 package com.whycoding.services;
 
 import com.whycoding.model.DNDClass;
+import com.whycoding.model.DNDRace;
 import com.whycoding.model.DNDResource;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,7 +22,9 @@ public class DNDClassService {
         return restTemplate.getForObject(API_BASE_URL + "races/", DNDResource.class);
     }
 
-    //TODO add getRacebyindex call
+    public DNDRace getRaceByIndex(String index){
+        return restTemplate.getForObject(API_BASE_URL + "races/" + index, DNDRace.class);
+    }
 
 
 

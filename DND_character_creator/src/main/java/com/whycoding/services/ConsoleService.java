@@ -30,7 +30,6 @@ public class ConsoleService {
     public void handleCharacterCreationMenu(){
         int menuSelection = -1;
 
-
         while(menuSelection != 0){
             printCharacterCreationMenu();
             menuSelection = promptForMenuSelection();
@@ -41,7 +40,7 @@ public class ConsoleService {
                     handleClassSelectionMenu();
                     break;
                 case 2:
-                    //TODO
+                    handleRaceSelectionMenu();
                     break;
                 case 3:
                     //TODO
@@ -110,12 +109,29 @@ public class ConsoleService {
                 System.out.println("Invalid selection, please choose again");
             } else {
                 userCharacter.setDndClass(dndClassService.getClassByIndex(classesResource.getResults()[menuSelection-1].get("index")));
-                printClass(userCharacter.getDndClass());
-                //printClass(dndClassService.getClassByIndex(classesResource.getResults()[menuSelection-1].get("index")));
-                System.out.println(userCharacter.getDndClass().getName());
+                System.out.println(userCharacter.getDndClass().toString());
                 break;
             }
+        }
+    }
 
+    public void handleRaceSelectionMenu(){
+        int menuSelection = -1;
+        DNDResource racesResource = dndClassService.getRacesResource();
+
+        while(menuSelection != 0){
+            printRaceSelectionMenu();
+            menuSelection = promptForMenuSelection();
+
+            if(menuSelection == 0) {
+                continue;
+            } else if (menuSelection > racesResource.getCount()){
+                System.out.println("Invalid selection, please choose again");
+            } else {
+                userCharacter.setDndRace(dndClassService.getRaceByIndex(racesResource.getResults()[menuSelection-1].get("index")));
+                System.out.println(userCharacter.getDndRace().toString());
+                break;
+            }
         }
     }
 
@@ -123,6 +139,14 @@ public class ConsoleService {
         System.out.println();
         System.out.println("---------Classes---------");
         printResource(dndClassService.getClassesResource());
+        System.out.println("0: Exit");
+        System.out.println();
+    }
+
+    public void printRaceSelectionMenu(){
+        System.out.println();
+        System.out.println("---------Races---------");
+        printResource(dndClassService.getRacesResource());
         System.out.println("0: Exit");
         System.out.println();
     }
@@ -155,10 +179,6 @@ public class ConsoleService {
         System.out.println("All of this and more will be answered by you. By the end of the process, you will have a fully fleshed out PC ready to take to the table");
         System.out.println("There is no time to waste. Return to the main menu and get to it, adventurer! And remember, it's dangerous to go alone...");
         System.out.println();
-    }
-
-    public void printClass(DNDClass dndClass) {
-        System.out.println(dndClass.toString());
     }
 
     public void printResource(DNDResource dndResource){

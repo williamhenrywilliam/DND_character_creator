@@ -28,10 +28,9 @@ public class DNDClass {
                 "\n Name: " + name +
                 "\n Hit Die: " + hitDie +
                 "\n URL: " + url;
-
     }
 
 
-//last brace of the class
-}
+
+} //end class
 

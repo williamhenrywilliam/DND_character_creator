@@ -12,7 +12,4 @@ public class DNDResource {
     public void setResults(Map<String, String>[] results) {this.results = results;}
 
 
-
-
-
 }
