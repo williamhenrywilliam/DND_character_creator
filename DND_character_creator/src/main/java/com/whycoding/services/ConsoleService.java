@@ -14,6 +14,7 @@ import java.io.FileWriter;
 public class ConsoleService {
 
     private final DNDClassService dndClassService = new DNDClassService();
+    private final AbilityService abilityService = new AbilityService();
     private final Scanner scanner = new Scanner(System.in);
     private final String DIRECTORY_NAME = "C:\\Users\\William\\Coding_Projects\\DND_character_creator";
 
@@ -44,10 +45,6 @@ public class ConsoleService {
                     break;
                 case 3:
                     //TODO
-
-                    break;
-                case 4:
-                    //TODO
                     System.out.println("-------------------------");
                     System.out.println("Name Selection");
                     System.out.println("-------------------------");
@@ -56,24 +53,31 @@ public class ConsoleService {
                     System.out.println(characterName + "? Great choice!");
 
                     userCharacter.setCharacterName(characterName);
+                    //createCharacterSheet Later
                     createCharacterSheet(userCharacter.getCharacterName());
                     break;
-                case 5:
-                    //TODO
+                case 4:
+                    handleAbilityScoreMenu();
                     break;
-                case 6:
+                case 5:
                     System.out.println("-------------------------");
                     System.out.println("DND Classes");
                     System.out.println("-------------------------");
                     printResource(dndClassService.getClassesResource());
                     break;
-                case 7:
+                case 6:
                     System.out.println("---------------");
                     System.out.println("DND Races");
                     System.out.println("---------------");
                     printResource(dndClassService.getRacesResource());
                     break;
-
+                case 7:
+                    //TODO finish character
+                    /*
+                    add the "createcharacter sheet here instead of during the name menu
+                    happy path: assume the user has filled out everything first
+                    to look out for: if the user hasn't filled everything out yet
+                     */
                 default:
                     System.out.println("Invalid selection");;
             }
@@ -85,12 +89,11 @@ public class ConsoleService {
         System.out.println("---------Character Creation Menu---------");
         System.out.println("1: Choose Class");
         System.out.println("2: Chose Race");
-        System.out.println("3: Choose Background");
-        System.out.println("4: Choose Name");
-        System.out.println("5: Roll for Ability Scores");
-        System.out.println("6: See Classes");
-        System.out.println("7: See Races");
-
+        System.out.println("3: Choose Name");
+        System.out.println("4: Roll for Ability Scores");
+        System.out.println("5: See Classes");
+        System.out.println("6: See Races");
+        System.out.println("7: Finish Character");
         System.out.println("0: Exit");
         System.out.println();
     }
@@ -135,6 +138,40 @@ public class ConsoleService {
         }
     }
 
+    public void handleAbilityScoreMenu(){
+        int menuSelection = -1;
+
+        while(menuSelection != 0){
+            printAbilityScoresMenu();
+            menuSelection = promptForMenuSelection();
+            switch(menuSelection){
+                case 0:
+                    continue;
+                case 1:
+                    userCharacter.setStrengthScore(abilityService.rollForAbilityScore("Strength"));
+                    break;
+                case 2:
+                    userCharacter.setDexterityScore(abilityService.rollForAbilityScore("Dexterity"));
+                    break;
+                case 3:
+                    userCharacter.setConstitutionScore(abilityService.rollForAbilityScore("Constitution"));
+                    break;
+                case 4:
+                    userCharacter.setIntelligenceScore(abilityService.rollForAbilityScore("Intelligence"));
+                    break;
+                case 5:
+                    userCharacter.setWisdomScore(abilityService.rollForAbilityScore("Wisdom"));
+                    break;
+                case 6:
+                    userCharacter.setCharismaScore(abilityService.rollForAbilityScore("Charisma"));
+                    break;
+                default:
+                    System.out.println("Invalid Selection");
+                    break;
+            }
+        }
+    }
+
     public void printClassSelectionMenu(){
         System.out.println();
         System.out.println("---------Classes---------");
@@ -147,6 +184,19 @@ public class ConsoleService {
         System.out.println();
         System.out.println("---------Races---------");
         printResource(dndClassService.getRacesResource());
+        System.out.println("0: Exit");
+        System.out.println();
+    }
+
+    public void printAbilityScoresMenu(){
+        System.out.println();
+        System.out.println("---------Abilities---------");
+        System.out.println("1: Strength");
+        System.out.println("2: Dexterity");
+        System.out.println("3: Constitution");
+        System.out.println("4: Intelligence");
+        System.out.println("5: Wisdom");
+        System.out.println("6: Charisma");
         System.out.println("0: Exit");
         System.out.println();
     }
