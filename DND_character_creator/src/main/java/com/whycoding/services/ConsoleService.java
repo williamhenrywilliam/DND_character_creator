@@ -4,12 +4,13 @@ import com.whycoding.model.DNDClass;
 import com.whycoding.model.DNDResource;
 import com.whycoding.model.PlayerCharacter;
 
+import java.io.FileWriter;
 import java.util.Map;
 import java.util.Scanner;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.io.FileWriter;
+
 
 public class ConsoleService {
 
@@ -51,10 +52,7 @@ public class ConsoleService {
                     System.out.println("Please enter your character's name:");
                     String characterName = scanner.nextLine();
                     System.out.println(characterName + "? Great choice!");
-
                     userCharacter.setCharacterName(characterName);
-                    //createCharacterSheet Later
-                    createCharacterSheet(userCharacter.getCharacterName());
                     break;
                 case 4:
                     handleAbilityScoreMenu();
@@ -72,12 +70,15 @@ public class ConsoleService {
                     printResource(dndClassService.getRacesResource());
                     break;
                 case 7:
-                    //TODO finish character
-                    /*
-                    add the "createcharacter sheet here instead of during the name menu
-                    happy path: assume the user has filled out everything first
-                    to look out for: if the user hasn't filled everything out yet
-                     */
+                    if(userCharacter.getCharacterName() == null){
+                        System.out.println("Make sure you give your character a name first!");
+                    } else {
+                        createCharacterSheet(userCharacter.getCharacterName());
+                        System.out.println("Congrats! Your character is now complete. Please exit the program to view your character sheet file.");
+                        System.out.println();
+                        menuSelection = 0;
+                    }
+                    break;
                 default:
                     System.out.println("Invalid selection");;
             }
@@ -247,7 +248,18 @@ public class ConsoleService {
         File characterSheet = new File(DIRECTORY_NAME, filePath);
 
         try{
-            characterSheet.createNewFile();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(characterSheet));
+            writer.write("Character Name: " + userCharacter.getCharacterName());
+            writer.write("\nClass: " + userCharacter.getDndClass().getName());
+            writer.write("\nFantasy Race: " + userCharacter.getDndRace().getName());
+            writer.write("\nStrength: " + userCharacter.getStrengthScore());
+            writer.write("\nDexterity: " + userCharacter.getDexterityScore());
+            writer.write("\nConstitution: " + userCharacter.getConstitutionScore());
+            writer.write("\nIntelligence: " + userCharacter.getIntelligenceScore());
+            writer.write("\nWisdom: " + userCharacter.getWisdomScore());
+            writer.write("\nCharisma: " + userCharacter.getCharismaScore());
+            writer.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

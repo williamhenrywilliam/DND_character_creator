@@ -6,13 +6,6 @@ import com.whycoding.services.DNDClassService;
 import com.whycoding.model.PlayerCharacter;
 
 
-/*
-Overall Todos:
-add the printResource and classes and stuff to the DNDClassService?
-i need some way to print all of the things from a resouce while also assigning them a number that I can click on to count as user seelction
-for the Class Selection menu, once tehy've selected, need to exit
- */
-
 public class App {
 
     private final ConsoleService consoleService = new ConsoleService();
